@@ -1,0 +1,382 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Cita previa El Casar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: barra de pruebas arriba (pestañas por pantalla) y, debajo, un marco de web municipal con cabecera, progreso, contenido y pie de botones. */
+:root{
+  --paper:#EBEFF3; --surface:#FFFFFF; --ink:#14202E; --muted:#51617A; --line:#C4CED9;
+  --accent:#0B4F9C; --accent-ink:#FFFFFF; --accent-soft:#DCE8F6;
+  --ok:#17653F; --err:#B3261E; --err-soft:#FBE6E4; --off:#E6EAEF; --off-ink:#5E6B7C;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-head:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0D131A; --surface:#16202B; --ink:#E8EDF3; --muted:#9AA9BC; --line:#2E3C4C;
+  --accent:#6FA8F2; --accent-ink:#071F3D; --accent-soft:#1B3350;
+  --ok:#6FD3A0; --err:#FF9189; --err-soft:#3B1F1E; --off:#1D2832; --off-ink:#8C9AAC; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0D131A; --surface:#16202B; --ink:#E8EDF3; --muted:#9AA9BC; --line:#2E3C4C;
+  --accent:#6FA8F2; --accent-ink:#071F3D; --accent-soft:#1B3350;
+  --ok:#6FD3A0; --err:#FF9189; --err-soft:#3B1F1E; --off:#1D2832; --off-ink:#8C9AAC; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:16px/1.5 var(--f-body);
+  padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+
+/* barra de pruebas */
+.bench{display:flex;flex-direction:column;gap:10px}
+.bench-top{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.tool{background:transparent;border:1px solid var(--line);border-radius:6px;padding:6px 12px;font-size:14px;cursor:pointer;color:var(--ink)}
+.tool:hover{border-color:var(--accent);color:var(--accent)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;min-width:0}
+.tab{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 12px;font:500 13px var(--f-mono);cursor:pointer;color:var(--muted)}
+.tab[aria-current="page"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.tab:hover:not([aria-current="page"]){border-color:var(--accent);color:var(--accent)}
+.framelabel{font:500 12px var(--f-mono);color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+
+/* marco de la web */
+.frame{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-height:620px;display:flex;flex-direction:column}
+.app-head{display:flex;align-items:center;gap:12px;padding:14px 28px;border-bottom:1px solid var(--line)}
+.crest{width:38px;height:38px;border-radius:6px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:700 20px var(--f-head);flex:none}
+.brand b{display:block;font:700 17px/1.2 var(--f-head)}
+.brand span{font-size:14px;color:var(--muted)}
+.progress{list-style:none;margin:0;padding:18px 28px;display:flex;align-items:center;border-bottom:1px solid var(--line);background:var(--paper)}
+.progress li{display:flex;align-items:center;gap:8px;flex:1;min-width:0;font-size:14px;color:var(--muted)}
+.progress li:last-child{flex:none}
+.progress li:not(:last-child)::after{content:"";flex:1;height:2px;background:var(--line);margin-inline:8px;min-width:10px}
+.progress li.done:not(:last-child)::after{background:var(--accent)}
+.dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;background:var(--surface)}
+.done .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.cur .dot{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.cur{color:var(--ink);font-weight:700}
+.err .dot{border-color:var(--err);color:var(--err);box-shadow:0 0 0 3px var(--err-soft)}
+.lbl{white-space:nowrap}
+.main{padding:28px;flex:1;display:flex;flex-direction:column;gap:18px;min-width:0}
+h2{font:700 28px/1.15 var(--f-head);margin:0;text-wrap:balance}
+h3{font:700 18px/1.2 var(--f-head);margin:0}
+.lead{margin:0;color:var(--muted);max-width:65ch}
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 28px;border-top:1px solid var(--line);background:var(--paper)}
+.foot-note{flex:1;min-width:180px;color:var(--muted);font-size:14px;text-align:right}
+.foot-note.ok{color:var(--ink)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:6px;padding:11px 22px;font-weight:700;cursor:pointer;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);min-height:46px}
+.btn:hover:not(:disabled){filter:brightness(1.1)}
+.btn.sec{background:transparent;color:var(--accent)}
+.btn.sm{padding:6px 14px;min-height:36px;font-size:14px}
+.btn:disabled{background:var(--off);border-color:var(--line);color:var(--off-ink);cursor:not-allowed}
+svg.i{width:1.1em;height:1.1em;flex:none}
+
+/* M1 tarjetas de trámite */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{border:2px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.card.sel{border-color:var(--accent);background:var(--accent-soft)}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .meta{font:500 12px var(--f-mono);color:var(--muted)}
+.card .btn{margin-top:auto;align-self:flex-start}
+.badge{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--accent)}
+
+/* M2 calendario y horas */
+.cal-wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;max-width:760px}
+.month{font:700 20px var(--f-head);text-transform:capitalize}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.dow{font-size:13px;color:var(--muted);text-align:center;font-weight:700;padding-bottom:2px}
+.day,.slot{border:2px solid var(--accent);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.day{min-height:62px;padding:4px 2px}
+.day b{font-size:18px}
+.st{font-size:11px;letter-spacing:.02em}
+.day:hover:not(:disabled):not(.on),.slot:hover:not(:disabled):not(.on){background:var(--accent-soft)}
+.on{background:var(--accent)!important;color:var(--accent-ink)!important;border-color:var(--accent)}
+.off{border:2px dashed var(--line)!important;color:var(--off-ink)!important;cursor:not-allowed;
+  background:repeating-linear-gradient(135deg,var(--off) 0 6px,transparent 6px 12px)!important}
+.off b,.off .t{text-decoration:line-through}
+.blank{visibility:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.sw{width:22px;height:22px;border-radius:4px;border:2px solid var(--accent);display:inline-grid;place-items:center;background:var(--surface)}
+.sw.on{background:var(--accent)!important;color:var(--accent-ink)}
+.sw.off{border:2px dashed var(--line)!important}
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:760px}
+.slot{min-height:84px;padding:10px}
+.slot .t{font:700 22px var(--f-mono)}
+.chosen{border:2px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:12px 16px;max-width:760px;font-weight:700}
+.chosen.none{border-color:var(--line);background:var(--paper);color:var(--muted);font-weight:400}
+
+/* M3 formulario */
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px 24px;max-width:860px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-weight:700}
+.req{color:var(--err)}
+.opt{color:var(--muted);font-weight:400;font-size:14px}
+.field input{border:2px solid var(--muted);border-radius:6px;padding:10px 12px;background:var(--surface);min-height:46px;width:100%}
+.field.has-err input{border-color:var(--err);background:var(--err-soft)}
+.hint{margin:0;font-size:14px;color:var(--muted)}
+.msg-err{margin:0;font-size:14px;color:var(--err);font-weight:700;display:flex;gap:6px;align-items:flex-start}
+.msg-err svg{margin-top:3px}
+.note{font-size:14px;color:var(--muted);margin:0}
+.banner{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--err);background:var(--err-soft);border-radius:8px;padding:12px 16px;max-width:860px}
+.banner b{display:block;color:var(--err)}
+.banner p{margin:0;font-size:15px}
+
+/* M4 revisión */
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;max-width:900px}
+.box{border:2px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.box-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+dl{margin:0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 16px}
+dt{color:var(--muted);font-size:15px}
+dd{margin:0;font-weight:700;overflow-wrap:anywhere}
+dd.miss{color:var(--err)}
+
+/* M5 confirmación */
+.done-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;max-width:960px}
+.ok-head{display:flex;gap:14px;align-items:center}
+.ok-ico{width:52px;height:52px;border-radius:50%;background:var(--ok);color:var(--surface);display:grid;place-items:center;flex:none}
+.ok-ico svg{width:28px;height:28px}
+.code{display:flex;flex-wrap:wrap;align-items:center;gap:12px;border:2px dashed var(--accent);border-radius:8px;padding:12px 16px;background:var(--accent-soft)}
+.code small{display:block;color:var(--muted);font-size:13px}
+.code code{font:500 26px var(--f-mono);letter-spacing:.04em}
+.code .btn{margin-left:auto}
+.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px}
+
+@media (max-width:640px){
+  .app-head,.progress,.main,.foot{padding-inline:16px}
+  h2{font-size:24px}
+  .progress li:not(.cur) .lbl{display:none}
+  .progress li:not(.cur):not(:last-child){flex:none}
+  .progress li:not(:last-child)::after{min-width:6px;margin-inline:4px}
+  .st{display:none}
+  .day{min-height:48px}
+  .foot-note{text-align:left;order:3;flex-basis:100%}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.day,.slot,.tool,.tab{transition:background .12s,border-color .12s}}
+</style>
+
+<div class="wrap">
+  <section class="bench" aria-label="Barra de pruebas del prototipo">
+    <div class="bench-top">
+      <span class="eyebrow">Prototipo E04 · rediseño de cita previa</span>
+      <div class="tools">
+        <button class="tool" data-act="reset" type="button">Empezar de cero (prueba A)</button>
+        <button class="tool" data-act="sample" type="button">Cargar datos de ejemplo</button>
+        <button class="tool" data-act="testb" type="button">Prueba B: correo «ana@»</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Saltar a una pantalla"></nav>
+    <div class="framelabel"><span id="flabel"></span><span>Marco de referencia 1280 × 800 px</span></div>
+  </section>
+  <div class="frame" id="frame">
+    <header class="app-head">
+      <div class="crest" aria-hidden="true">C</div>
+      <div class="brand"><b>Ayuntamiento de El Casar</b><span>Cita previa · Atención ciudadana</span></div>
+    </header>
+    <ol class="progress" id="progress" aria-label="Progreso de la cita"></ol>
+    <main class="main" id="main"></main>
+    <footer class="foot" id="foot"></footer>
+  </div>
+</div>
+
+<script>
+(function(){
+var STEPS=['Trámite','Fecha','Hora','Datos','Revisión','Confirmación'];
+var SCREENS={
+  'inicio':{name:'01_Inicio',step:0},
+  'calendario':{name:'02_Calendario',step:1},
+  'horario':{name:'03_Horario',step:2},
+  'datos':{name:'04_Datos',step:3},
+  'error-correo':{name:'04B_ErrorCorreo',step:3},
+  'revision':{name:'05_Revisión',step:4},
+  'confirmacion':{name:'06_Confirmación',step:5}
+};
+var ORDER=['inicio','calendario','horario','datos','error-correo','revision','confirmacion'];
+var TRAMITES={
+  padron:{t:'Padrón municipal',d:'Certificado de empadronamiento o volante de residencia.',m:'Duración aprox. 10 min'},
+  obras:{t:'Licencia de obra menor',d:'Reformas en vivienda que no afectan a la estructura.',m:'Duración aprox. 20 min'},
+  registro:{t:'Registro de entrada',d:'Presentar instancias, escritos y documentos.',m:'Duración aprox. 10 min'}
+};
+var FULL_DAYS=[4,10,18,25];
+var SLOTS=['09:30','10:00','10:30','11:00','11:30','12:00'];
+var FULL_SLOTS=['10:00'];
+var CODE='CP-2026-04871';
+var SAMPLE={tramite:'padron',fecha:12,hora:'10:30',nombre:'Ana García López',dni:'12345678Z',correo:'ana@correo.es',telefono:'600123456'};
+var EMPTY={tramite:null,fecha:null,hora:null,nombre:'',dni:'',correo:'',telefono:''};
+var S=Object.assign({},SAMPLE);
+var touched=false;
+
+var I={
+  check:'<svg class="i" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>',
+  warn:'<svg class="i" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5l8 14H2z"/><path d="M10 8v4M10 14.5v.5"/></svg>',
+  back:'<svg class="i" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l-6 6 6 6"/></svg>',
+  next:'<svg class="i" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4l6 6-6 6"/></svg>'
+};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function dateText(d){return new Date(2026,10,d).toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+function dateShort(d){return new Date(2026,10,d).toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'})}
+function cur(){var h=location.hash.slice(1);return SCREENS[h]?h:'inicio'}
+function go(id){if(location.hash.slice(1)===id){render()}else{location.hash=id}}
+
+function validate(){
+  var e={},c=S.correo.trim();
+  if(!S.nombre.trim()) e.nombre='Escribe tu nombre y apellidos.';
+  if(!/^\d{8}[A-Za-z]$/.test(S.dni.trim())) e.dni='El DNI tiene 8 números y una letra. Ejemplo: 12345678Z.';
+  if(!c) e.correo='Escribe tu correo para recibir la confirmación.';
+  else if(c.indexOf('@')<0) e.correo='Falta la @. Escribe el correo completo. Ejemplo: ana@correo.es.';
+  else if(!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(c)) e.correo='El correo está incompleto: falta lo que va después de la @. Ejemplo: ana@correo.es.';
+  if(S.telefono.trim() && !/^\d{9}$/.test(S.telefono.replace(/\s/g,''))) e.telefono='El teléfono tiene 9 números, sin guiones. Ejemplo: 600123456.';
+  return e;
+}
+
+/* ---------- pantallas ---------- */
+function vInicio(){
+  var cards=Object.keys(TRAMITES).map(function(k){
+    var t=TRAMITES[k],on=S.tramite===k;
+    return '<div class="card'+(on?' sel':'')+'"><span class="meta">'+t.m+'</span><h3>'+t.t+'</h3><p>'+t.d+'</p>'+
+      (on?'<span class="badge">'+I.check+' Seleccionado</span><button class="btn sec sm" data-act="tramite" data-id="'+k+'" data-key="t-'+k+'" type="button" aria-pressed="true">Cambiar trámite</button>'
+         :'<button class="btn sec sm" data-act="tramite" data-id="'+k+'" data-key="t-'+k+'" type="button" aria-pressed="false">Seleccionar</button>')+'</div>';
+  }).join('');
+  return {main:'<h2 tabindex="-1">¿Qué trámite necesitas?</h2><p class="lead">Elige uno con «Seleccionar». Cuando lo tengas, pulsa «Continuar» abajo para escoger fecha.</p><div class="cards">'+cards+'</div>',
+    foot:footer(null,'calendario','Continuar',!S.tramite,S.tramite?'Trámite elegido: '+TRAMITES[S.tramite].t:'Elige un trámite para continuar.')};
+}
+function vCalendario(){
+  var heads=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(function(h){return '<div class="dow">'+h+'</div>'}).join('');
+  var cells='';for(var b=0;b<6;b++)cells+='<div class="blank"></div>';
+  for(var d=1;d<=30;d++){
+    var col=(6+d-1)%7,weekend=col>=5,full=FULL_DAYS.indexOf(d)>=0,on=S.fecha===d;
+    var cls='day',st='Libre',dis='';
+    if(weekend){cls+=' off';st='Cerrado';dis=' disabled'}
+    else if(full){cls+=' off';st='Completo';dis=' disabled'}
+    else if(on){cls+=' on';st='Elegida'}
+    var lab=d+' de noviembre, '+(weekend?'cerrado':full?'completo, no disponible':on?'seleccionado':'disponible');
+    cells+='<button type="button" class="'+cls+'"'+dis+' data-act="day" data-d="'+d+'" data-key="d-'+d+'" aria-label="'+lab+'" aria-pressed="'+on+'"><b>'+d+'</b><span class="st">'+(on?'✓ ':'')+st+'</span></button>';
+  }
+  var legend='<div class="legend"><span><i class="sw"></i>Disponible</span><span><i class="sw on">'+I.check+'</i>Seleccionado</span><span><i class="sw off"></i>No disponible (completo o cerrado)</span></div>';
+  var chosen=S.fecha?'<div class="chosen">Has elegido: '+dateText(S.fecha)+'</div>':'<div class="chosen none">Aún no has elegido día.</div>';
+  return {main:'<h2 tabindex="-1">Elige el día de tu cita</h2><p class="lead">Solo puedes pulsar los días con borde sólido.</p><div class="cal-wrap"><div class="month">noviembre de 2026</div><div class="cal">'+heads+cells+'</div>'+legend+chosen+'</div>',
+    foot:footer('inicio','horario','Continuar',!S.fecha,S.fecha?'':'Elige un día para continuar.')};
+}
+function vHorario(){
+  var slots=SLOTS.map(function(t){
+    var full=FULL_SLOTS.indexOf(t)>=0,on=S.hora===t,cls='slot',st='Disponible',dis='';
+    if(full){cls+=' off';st='Completa';dis=' disabled'}
+    else if(on){cls+=' on';st='✓ Seleccionada'}
+    return '<button type="button" class="'+cls+'"'+dis+' data-act="slot" data-t="'+t+'" data-key="s-'+t+'" aria-pressed="'+on+'" aria-label="'+t+', '+(full?'completa, no disponible':on?'seleccionada':'disponible')+'"><span class="t">'+t+'</span><span class="st" style="display:block">'+st+'</span></button>';
+  }).join('');
+  var legend='<div class="legend"><span><i class="sw"></i>Disponible</span><span><i class="sw on">'+I.check+'</i>Seleccionada</span><span><i class="sw off"></i>Completa</span></div>';
+  var chosen=(S.fecha&&S.hora)?'<div class="chosen">Has elegido: '+dateText(S.fecha)+', '+S.hora+'</div>':
+    '<div class="chosen none">'+(S.fecha?dateText(S.fecha)+'. Aún no has elegido hora.':'Primero elige un día en el paso anterior.')+'</div>';
+  return {main:'<h2 tabindex="-1">Elige la hora</h2><p class="lead">'+(S.fecha?'Franjas del '+dateShort(S.fecha)+'. Cada cita dura 15 minutos.':'Cada cita dura 15 minutos.')+'</p><div class="slots">'+slots+'</div>'+legend+chosen,
+    foot:footer('calendario','datos','Continuar',!S.hora,S.hora?'':'Elige una hora para continuar.')};
+}
+function field(id,label,req,hint,err,type,mode){
+  return '<div class="field'+(err?' has-err':'')+'"><label for="f-'+id+'">'+label+(req?'<span class="req" aria-hidden="true"> *</span><span class="sr"> (obligatorio)</span>':'<span class="opt"> (opcional)</span>')+'</label>'+
+    '<input id="f-'+id+'" data-field="'+id+'" type="'+type+'"'+(mode?' inputmode="'+mode+'"':'')+' autocomplete="off" value="'+esc(S[id])+'"'+(req?' required':'')+(err?' aria-invalid="true" aria-describedby="e-'+id+'"':' aria-describedby="h-'+id+'"')+'>'+
+    (err?'<p class="msg-err" id="e-'+id+'">'+I.warn+'<span>'+err+'</span></p>':'<p class="hint" id="h-'+id+'">'+hint+'</p>')+'</div>';
+}
+function vDatos(isErr){
+  var e=(isErr||touched)?validate():{};
+  var n=Object.keys(e).length;
+  var banner=n?'<div class="banner" role="alert">'+I.warn+'<div><b>Revisa '+n+(n===1?' campo':' campos')+' antes de continuar</b><p>'+(e.correo?'El correo no es válido. Tus demás datos siguen guardados.':'Corrige lo marcado en rojo. Tus demás datos siguen guardados.')+'</p></div></div>':'';
+  var form='<div class="form">'+
+    field('nombre','Nombre y apellidos',true,'Como aparece en tu DNI.',e.nombre,'text')+
+    field('dni','DNI (ficticio)',true,'8 números y una letra. Ejemplo: 12345678Z.',e.dni,'text')+
+    field('correo','Correo electrónico',true,'Te enviaremos aquí la confirmación de la cita.',e.correo,'text','email')+
+    field('telefono','Teléfono',false,'Solo para avisarte si hay un cambio. 9 números.',e.telefono,'tel','numeric')+'</div>';
+  return {main:'<h2 tabindex="-1">'+(isErr?'Corrige tu correo':'Tus datos')+'</h2><p class="lead">Todos los datos de este prototipo son ficticios. Los campos con <span class="req">*</span> son obligatorios.</p>'+banner+form+'<p class="note"><span class="req">*</span> Campo obligatorio</p>',
+    foot:footer(isErr?'datos':'horario',null,isErr?'Corregir y continuar':'Continuar',false,'',isErr?'validate':'validate')};
+}
+function recap(){
+  var v=function(x,fmt){return x?'<dd>'+esc(fmt?fmt(x):x)+'</dd>':'<dd class="miss">Falta elegir</dd>'};
+  return {
+    t:S.tramite?TRAMITES[S.tramite].t:null,
+    f:S.fecha?dateText(S.fecha):null,h:S.hora,v:v
+  };
+}
+function vRevision(){
+  var r=recap(),v=r.v;
+  var okEmail=!validate().correo&&S.correo.trim();
+  var complete=S.tramite&&S.fecha&&S.hora&&S.nombre.trim()&&okEmail&&!validate().dni;
+  var cita='<div class="box"><div class="box-h"><h3>Tu cita</h3><button class="btn sec sm" type="button" data-go="calendario">Cambiar fecha u hora</button></div><dl>'+
+    '<dt>Trámite</dt>'+v(r.t)+'<dt>Fecha</dt>'+v(r.f)+'<dt>Hora</dt>'+v(r.h)+'<dt>Lugar</dt><dd>Oficina de Atención Ciudadana, Plaza Mayor 1</dd></dl></div>';
+  var datos='<div class="box"><div class="box-h"><h3>Datos personales</h3><button class="btn sec sm" type="button" data-go="datos">Editar datos</button></div><dl>'+
+    '<dt>Nombre</dt>'+v(S.nombre.trim())+'<dt>DNI</dt>'+v(S.dni.trim())+'<dt>Correo</dt>'+v(S.correo.trim())+'<dt>Teléfono</dt>'+(S.telefono.trim()?'<dd>'+esc(S.telefono)+'</dd>':'<dd style="font-weight:400;color:var(--muted)">No indicado</dd>')+'</dl></div>';
+  return {main:'<h2 tabindex="-1">Revisa tu cita</h2><p class="lead">Comprueba que todo es correcto. Puedes cambiar cualquier dato antes de confirmar.</p><div class="sum">'+cita+datos+'</div>',
+    foot:footer('datos','confirmacion','Confirmar cita',!complete,complete?'Al confirmar se reserva tu hueco.':'Faltan datos. Usa «Editar» para completarlos.')};
+}
+function vConfirmacion(){
+  var r=recap();
+  return {main:'<div class="ok-head"><div class="ok-ico">'+I.check+'</div><div><h2 tabindex="-1">Tu cita está confirmada</h2><p class="lead">Hemos reservado tu hueco. Guarda este código.</p></div></div>'+
+    '<div class="done-grid"><div style="display:flex;flex-direction:column;gap:16px;min-width:0">'+
+    '<div class="code"><div><small>Código de tu cita</small><code id="code">'+CODE+'</code></div><button class="btn sec sm" type="button" data-act="copy" id="copybtn">Copiar código</button></div>'+
+    '<div class="box"><h3>Detalle</h3><dl><dt>Trámite</dt><dd>'+esc(r.t||'—')+'</dd><dt>Fecha</dt><dd>'+esc(r.f||'—')+'</dd><dt>Hora</dt><dd>'+esc(r.h||'—')+'</dd><dt>Lugar</dt><dd>Oficina de Atención Ciudadana, Plaza Mayor 1</dd></dl></div></div>'+
+    '<div class="box"><h3>Qué hacer ahora</h3><ol class="steps"><li>Revisa tu correo: enviaremos la confirmación a <b>'+esc(S.correo.trim()||'tu correo')+'</b>.</li><li>Lleva tu DNI original y el código de la cita.</li><li>Llega 10 minutos antes. Si no puedes venir, cancela la cita con 24 horas de antelación.</li></ol></div></div>',
+    foot:footer(null,'inicio','Ir al inicio',false,'',null,true)};
+}
+function footer(back,next,label,disabled,note,act,noArrow){
+  var b=back?'<button class="btn sec" type="button" data-go="'+back+'">'+I.back+' Volver</button>':'<span></span>';
+  var n;
+  if(act==='validate'||act==='validate-error') n='<button class="btn" type="button" data-act="validate">'+label+' '+I.next+'</button>';
+  else n='<button class="btn" type="button" data-go="'+next+'"'+(disabled?' disabled':'')+'>'+label+(noArrow?'':' '+I.next)+'</button>';
+  return b+'<span class="foot-note'+(disabled?'':' ok')+'" id="fnote">'+(note||'')+'</span>'+n;
+}
+
+/* ---------- render ---------- */
+function render(){
+  var id=cur(),sc=SCREENS[id],lastKey=document.activeElement&&document.activeElement.getAttribute&&document.activeElement.getAttribute('data-key');
+  var v=id==='inicio'?vInicio():id==='calendario'?vCalendario():id==='horario'?vHorario():id==='datos'?vDatos(false):id==='error-correo'?vDatos(true):id==='revision'?vRevision():vConfirmacion();
+  document.getElementById('main').innerHTML=v.main;
+  document.getElementById('foot').innerHTML=v.foot;
+  document.getElementById('progress').innerHTML=STEPS.map(function(s,i){
+    var c=i<sc.step?'done':i===sc.step?(id==='error-correo'?'cur err':'cur'):'';
+    if(id==='confirmacion'&&i===5)c='done';
+    var dot=c.indexOf('done')>=0?I.check:(c.indexOf('err')>=0?'!':(i+1));
+    return '<li class="'+c+'"'+(c.indexOf('cur')>=0?' aria-current="step"':'')+'><span class="dot">'+dot+'</span><span class="lbl">'+s+'</span></li>';
+  }).join('');
+  document.getElementById('tabs').innerHTML=ORDER.map(function(k){
+    return '<button class="tab" type="button" data-go="'+k+'"'+(k===id?' aria-current="page"':'')+'>'+SCREENS[k].name+'</button>';
+  }).join('');
+  document.getElementById('flabel').textContent=sc.name;
+  if(lastKey){var el=document.querySelector('[data-key="'+lastKey+'"]');if(el&&!el.disabled)el.focus()}
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('click',function(ev){
+  var g=ev.target.closest('[data-go]');
+  if(g&&!g.disabled){touched=false;go(g.getAttribute('data-go'));return}
+  var a=ev.target.closest('[data-act]');if(!a||a.disabled)return;
+  var act=a.getAttribute('data-act');
+  if(act==='tramite'){S.tramite=a.getAttribute('data-id');render()}
+  else if(act==='day'){S.fecha=+a.getAttribute('data-d');render()}
+  else if(act==='slot'){S.hora=a.getAttribute('data-t');render()}
+  else if(act==='validate'){
+    var e=validate(),id=cur();
+    if(e.correo&&id==='datos'){touched=true;go('error-correo')}
+    else if(Object.keys(e).length){touched=true;render()}
+    else{touched=false;go('revision')}
+  }
+  else if(act==='reset'){S=Object.assign({},EMPTY);touched=false;go('inicio')}
+  else if(act==='sample'){S=Object.assign({},SAMPLE);touched=false;go('inicio')}
+  else if(act==='testb'){S=Object.assign({},SAMPLE,{correo:'ana@'});touched=false;go('datos')}
+  else if(act==='copy'){
+    var btn=document.getElementById('copybtn'),node=document.getElementById('code');
+    var done=function(){btn.textContent='Código copiado'};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(node);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selecciona y copia'};
+    try{navigator.clipboard.writeText(CODE).then(done,sel)}catch(x){sel()}
+  }
+});
+document.addEventListener('input',function(ev){
+  var f=ev.target.getAttribute&&ev.target.getAttribute('data-field');
+  if(f)S[f]=ev.target.value;
+});
+window.addEventListener('hashchange',function(){touched=(cur()==='error-correo');render();var h=document.querySelector('#main h2');if(h)h.focus({preventScroll:true})});
+render();
+})();
+</script>
+
+</body></html>
